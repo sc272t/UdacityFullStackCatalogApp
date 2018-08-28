@@ -1,0 +1,31 @@
+{% extends "main.html" %} {% block content %} {% include "header.html" %}
+<!-- Delete Category title -->
+<div class="container col-md-6 col-md-offset-1">
+    <h1>Delete Category</h1>
+    <hr>
+</div>
+
+<!-- category list -->
+<div class="container">
+    <div class="col-md-6 padding-top padding-left col-md-offset-1">
+        <label>Category:</label>
+        <em class="form-control">{{category.name}}</em>
+        <br>
+
+        <strong>Are you sure to delete Category {{category.name}} and all of it's items?</strong> {%if 'username' in session %}
+        <form action="{{url_for('deleteCategory', categoryId=categoryId)}}" method='post'>
+            <br>
+            <a href="{{url_for('getItems', categoryId=categoryId)}}" class="btn btn-success">Cancel</a>
+            <button class="btn black-text btn-danger" type="submit" id="submit">Submit
+            </button>
+        </form>
+        <br> {% endif %}
+    </div>
+</div>
+		<hr>
+		{% if category.user_id == session.user_id %}
+		<div class="text-center">
+			Category Owner:  {{session.get('username')}} <img src = "{{session.get('picture')}} alt="image" style="height: 40px;" />
+		</div>
+		{% endif %}
+{% endblock %}

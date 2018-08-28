@@ -1,0 +1,37 @@
+{% extends "main.html" %} {% block content %} {% include "header.html" %}
+<!-- Delete item title -->
+<div class="container col-md-6 col-md-offset-1">
+    <h1>Delete Item</h1>
+    <hr>
+</div>
+
+<!-- category list -->
+<div class="container">
+    <div class="col-md-6 padding-top padding-left col-md-offset-1">
+        <label>Name:</label>
+        <div class="form-control">{{item.name}}</div>
+        <br>
+        <label>Category:</label>
+        <div class="form-control">{{category.name}}</div>
+        <br>
+        <label>Description:</label>
+        <textarea readonly id="description" class="form-control" name="description">{{item.description}}</textarea>
+
+        <br>
+        <strong>Are you sure to delete item {{item.name}} from {{category.name}} category?</strong> {%if 'username' in session %}
+        <form action="{{url_for('deleteItem', itemName=item.name, categoryId=categoryId)}}" method='post'>
+            <br>
+            <a href="{{url_for('getItem', itemName=item.name, categoryId=categoryId)}}" class="btn btn-success">Cancel</a>
+            <button class="btn black-text btn-danger" type="submit" id="submit">Submit
+            </button>
+        </form>
+        <br> {% endif %}
+    </div>
+</div>
+		<hr>
+		{% if item.user_id == session.user_id %}
+		<div class="text-center">
+			Item Owner:  {{session.get('username')}} <img src = "{{session.get('picture')}} alt="image" style="height: 40px;" />
+		</div>
+		{% endif %}
+{% endblock %}

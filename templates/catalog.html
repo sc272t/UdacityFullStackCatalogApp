@@ -1,0 +1,53 @@
+{% extends "main.html" %} {% block content %} {% include "header.html" %}
+<div class="flash">
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+</div>
+
+<!-- title -->
+<div class="container">
+    <h2 class="form-text text-center">Nanodegree Categories & Latest Items
+	<a href="{{url_for('catalogJSON')}}" class="btn btn-warning glyphicon glyphicon-download-alt" target="_blank"></a>
+	</h2>
+</div>
+
+<div class="container">
+    <!-- Categories -->
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Categories
+		  {%if 'username' in session %}
+              <a class="addCategory" href="{{url_for('addCategory')}}"><i class="btn btn-success primary glyphicon glyphicon-plus"></i></a>
+            {% endif %}
+		  </h2>
+            <br> {% for category in categories %}
+            <a href="{{url_for('getItems', categoryId=category.id)}}" class="list-group-item">
+              {{category.name}}
+            </a> {% endfor %}
+        </div>
+        <!-- Latest Items added to Catalog Website-->
+        <div class="col-md-6 pull-right">
+            <h2>Latest Items
+			{%if 'username' in session %}
+              <a class="newItem" href="{{url_for('newItem')}}"><i class="btn btn-success primary glyphicon glyphicon-plus"></i></a>
+            {% endif %}
+			</h2>
+            <br> {% for item in items %}
+            <a href="{{url_for('getItem', itemName=item.name, categoryId=item.category_id)}}" class="list-group-item">
+                <span class="title">
+                  {{item.name}}
+                  <em class="title">({{categoryList[item.category_id]}})</em>
+                </span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<br>
+<br>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "main.html" %} {% block content %} {% include "header.html" %}
+
+<div class='flash'>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+</div>
+
+<!-- page title -->
+<div class="container col-md-6 col-md-offset-1">
+    <h1>Add New item</h1>
+</div>
+
+<div class="container">
+    <div class="col-md-6 padding-top padding-left col-md-offset-1">
+        <!-- NEW ITEM FORM-->
+        <form action="{{url_for('addItem', categoryId=categoryId)}}" method="post">
+            <!-- name input -->
+            <div class="form-group">
+                <label for="item_name">Name</label>
+                <input id="item_name" type="text" name="name" class="form-control">
+                <br>
+                <!-- description input -->
+                <label for="description">Description</label>
+                <textarea id="description" class="form-control" name="description" rows="3"></textarea>
+                <br>
+                <!-- submit button -->
+                <button type="submit" class="btn btn-success" id="submit" type="submit">
+                    Create
+                </button>
+                <a href="{{url_for('showCatalog')}}" class="btn btn-default">Return</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

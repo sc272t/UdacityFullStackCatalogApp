@@ -1,0 +1,61 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<div class = 'flash'>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul>
+      {% for message in messages %}
+        <li> <strong> {{ message }} </strong> </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% endwith %}
+</div>
+
+<!-- page title -->
+ <div class="container col-md-6 col-md-offset-6">
+    <h2> {{category.name}} Items</h2>
+ </div>
+
+<!-- category list -->
+<div class="container">
+    <div class="row">
+      <!-- CATEGORIES -->
+      <div class="col-md-6">
+          <h2>Categories</h2>
+          <div class="collection">
+            {% for c in categories %}
+            <a href="{{url_for('getItems', categoryId=c.id)}}" class="list-group-item">
+              {{c.name}}
+            </a>
+            {% endfor %}
+          </div>
+      </div>
+      <!-- Latest Items -->
+      <div class="col-md-6 padding-right">
+          <h3>
+            {{category.name}}
+			{%if 'username' in session %}
+				<a href="{{url_for('deleteCategory', categoryId=category.id)}}" class="btn btn-danger glyphicon glyphicon-minus"></a>
+			{% endif %}
+          </h3>	
+            {%if 'username' in session %}
+			<h4 class="text">Add Item <a class="btn btn-success primary glyphicon glyphicon-plus" href="{{url_for('addItem', categoryId=category.id)}}"></a>
+            {% endif %}
+			</h4>
+          <div>
+            {% for item in items %}
+              <a href="{{url_for('getItem', itemName=item.name, categoryId=category.id)}}" class="list-group-item">
+                <strong><span>{{item.name}}</span></strong>
+                <p><em>{{item.description}}</em></p>
+              </a>
+            {% endfor %}
+          </div>
+      </div>
+    </div>
+</div>
+<br>
+<br>
+
+{% endblock %}

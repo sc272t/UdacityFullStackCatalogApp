@@ -1,0 +1,36 @@
+{% extends "main.html" %} {% block content %} {% include "header.html" %}
+
+<!-- page title -->
+<div class="container col-md-6 col-md-offset-1">
+    <h2>Item Details <a href="{{url_for('itemJSON', itemName=item.name, categoryId=category.id)}}" class="btn btn-warning glyphicon glyphicon-download-alt" target="_blank"></a>
+	</h2>
+    <hr>
+</div>
+<!-- category list -->
+<div class="container">
+
+    <div class="col-md-6 padding-top padding-left col-md-offset-1">
+        <div class="form-group">
+           <label>Name:</label>
+        <div class="form-control">{{item.name}}</div>
+        <br>
+        <label>Category:</label>
+        <div class="form-control">{{category.name}}</div>
+        <br>
+            <label>Description:</label>
+            <textarea readonly id="description" class="form-control" name="description">{{item.description}}</textarea>
+            <br>
+        </div>
+        {%if 'username' in session %}
+        <!-- Edit , Delete and Cancel navigation hyperlinks -->
+        <a href="{{url_for('editItem', itemName=item.name, categoryId=category.id)}}" class="btn btn-success">Edit</a>
+        <a href="{{url_for('deleteItem', itemName=item.name, categoryId=category.id)}}" class="btn btn-danger">Delete</a>
+        <a href="{{url_for('getItems', itemName=item.name, categoryId=category.id)}}" class="btn btn-warning">Return to Category</a> {% endif %}
+    </div>
+</div>
+		{% if item.user_id == session.user_id %}
+		<div class="text-center">
+			Item Owner:  {{session.get('username')}} <img src = "{{session.get('picture')}} alt="image" style="height: 40px;" />
+		</div>
+		{% endif %}
+{% endblock %}

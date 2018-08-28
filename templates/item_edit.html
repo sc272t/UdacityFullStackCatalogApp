@@ -1,0 +1,56 @@
+{% extends "main.html" %} {% block content %} {% include "header.html" %}
+<div class="flash">
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li> <strong> {{ message }} </strong> </li>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+</div>
+
+<!-- Edit item title -->
+<div class="row">
+    <div class="col-md-6 col-md-offset-1">
+        <h1>Edit Item</h1>
+        <hr>
+    </div>
+</div>
+
+<!-- Item information -->
+<div class="container">
+    <div class="col-md-6 padding-top padding-left col-md-offset-1">
+        <!-- NEW ITEM FORM-->
+        <form method="post">
+            <div class="form-group">
+                <!-- name input -->
+                <label for="item_name">Item Name</label>
+                <input id="item_name" type="text" class="form-control" name="name" value="{{item.name}}">
+                <br>
+                <!-- description input -->
+                <label for="description">Item Description</label>
+                <textarea id="description" class="form-control" name="description">{{item.description}}</textarea>
+                <br>
+                <!-- category input -->
+                <label for="category">Category:</label>
+                <select class="form-control" name="category">
+                    {% for category in categories %} {% if category.id == item.category_id %}
+                    <option id="{{category.id}}" value="{{category.name}}" selected>{{category.name}}</option>
+                    {% else %}
+                    <option id="{{category.id}}" value="{{category.name}}">{{category.name}}</option>
+                    {% endif %} {% endfor %}
+                </select>
+                <br>
+                <!-- submit button -->
+                <button type="submit" class="btn btn-success" id="submit" type="submit">
+                    Save
+                </button>
+                <a href="{{url_for('getItem', itemName=item.name, categoryId=categoryId)}}" class="btn btn-default">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="text-center">
+			Item Owner:  {{session.get('username')}} <img src = "{{session.get('picture')}} alt="image" style="height: 40px;" />
+</div>
+{% endblock %}

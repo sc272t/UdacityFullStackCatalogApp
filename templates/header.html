@@ -1,0 +1,32 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <a href="/catalog" class="nav-wrapper navbar-nav navbar-brand"> <span style="color:white" class="glyphicon glyphicon-home"> Nanodegrees Catalog Website  </span></a>
+
+        <ul id="nav-wrapper" class="nav navbar-nav pull-right">
+            <li>
+                {%if 'username' not in session %}
+                <a href="{{url_for('showLogin')}}">
+                    <class="nav navbar-nav navbar-right pull-right">
+                        <button class="btn btn-warning">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Login
+                        </button>
+                </a>
+                {% else %}
+                <a href="{{url_for('disconnect')}}">
+                    <class="nav navbar-nav pull-right">
+
+                        <button class="btn btn-success">
+                            <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Logout {{session.get('username')}}
+
+                        </button>
+                </a>
+
+                {% endif %}
+            </li>
+            <!--
+				<li> {{session.get('username')}} <img src = "{{session.get('picture')}}" width="10%" height="10%">
+				</li> -->
+        </ul>
+    </div>
+	
+</nav>
